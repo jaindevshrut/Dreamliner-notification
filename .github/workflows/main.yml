@@ -1,0 +1,41 @@
+name: Task Monitor
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Runs every 5 minutes
+  workflow_dispatch:      # Allows you to run it manually to test
+
+permissions:
+  contents: write
+
+jobs:
+  check-tasks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+    - name: Run Monitor Script
+      env:
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        SCALER_AUTH: ${{ secrets.SCALER_AUTH }}
+      run: python monitor.py
+
+    - name: Commit and push if changes
+      run: |
+        git config --global user.name 'GitHub Action'
+        git config --global user.email 'action@github.com'
+        git add last_id.txt
+        # Only commit if last_id.txt actually changed
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update last task ID" && git push)
