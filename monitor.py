@@ -48,6 +48,7 @@ def main():
 
         if not projects:
             print("No projects found in list.")
+            send_telegram(data)
             sys.exit(0)
 
         latest_task = projects[0]
@@ -61,7 +62,7 @@ def main():
             send_telegram(f"🚨 NEW TASK!\n\nTitle: {latest_title}\nLink: https://dreamliner.scaler.com/projects/{latest_id}")
             save_last_seen_id(latest_id)
         else:
-            send_telegram(latest_task)
+            send_telegram(data)
             print("No new tasks.")
 
     except Exception as e:
@@ -69,3 +70,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
