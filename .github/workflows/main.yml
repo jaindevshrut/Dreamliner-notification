@@ -32,10 +32,11 @@ jobs:
         SCALER_AUTH: ${{ secrets.SCALER_AUTH }}
       run: python monitor.py
 
-    - name: Commit and push if changes
+    - name: Commit and push changes
       run: |
         git config --global user.name 'GitHub Action'
         git config --global user.email 'action@github.com'
-        git add task_state.json
-        # Only commit if last_id.txt actually changed
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update last task ID" && git push)
+        # Add BOTH files
+        git add task_state.json tokens.json
+        # Only commit if something changed
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update state and tokens" && git push)
