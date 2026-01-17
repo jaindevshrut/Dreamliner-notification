@@ -119,12 +119,14 @@ def main():
     json_data = get_projects_data()
     
     if not json_data:
+        save_state({})
         print("Failed to get data.")
         sys.exit(0) # Stop if we couldn't get data even after refresh
 
     current_projects = json_data.get("data", [])
     
     if not current_projects:
+        save_state({})
         print("No projects found.")
         sys.exit(0)
 
@@ -168,3 +170,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
