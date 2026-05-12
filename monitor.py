@@ -9,6 +9,7 @@ import sys
 TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
 CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 CHAT_ID2 = os.environ["TELEGRAM_CHAT_ID2"]
+CHAT_ID3 = os.environ["TELEGRAM_CHAT_ID3"]
 # We try to load the token from env, but we might overwrite it with a fresh one later
 INITIAL_AUTH_TOKEN = os.environ.get("SCALER_AUTH", "") 
 
@@ -20,9 +21,11 @@ def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {"chat_id": CHAT_ID, "text": message, "parse_mode": "Markdown"}
     payload2 = {"chat_id": CHAT_ID2, "text": message, "parse_mode": "Markdown"}
+    payload3 = {"chat_id": CHAT_ID3, "text": message, "parse_mode": "Markdown"}
     try:
         requests.post(url, json=payload)
         requests.post(url, json=payload2)
+        requests.post(url, json=payload3)
     except Exception as e:
         print(f"Failed to send alert: {e}")
 
