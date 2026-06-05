@@ -64,7 +64,7 @@ def refresh_the_token():
             return new_token
         else:
             print("❌ Gmail Login Failed.")
-            send_telegram("⚠️ CRITICAL: Gmail Login Failed. Check script logs.")
+            send_telegram("CRITICAL: Gmail Login Failed. Check script logs.")
             return None
     except Exception as e:
         print(f"Auto-Login Error: {e}")
@@ -152,7 +152,7 @@ def main():
 
         # COMPARE
         if p_id not in last_state:
-            msg = (f"🚀 *NEW PROJECT FOUND*\n"
+            msg = (f"*NEW PROJECT FOUND*\n"
                    f"Name: `{p_name}`\n"
                    f"Total Tasks: {current_count}\n"
                    f"Drafts (Available): {draft_count}")
@@ -161,7 +161,7 @@ def main():
         
         elif current_count > last_state[p_id]:
             new_tasks = current_count - last_state[p_id]
-            msg = (f"🔔 *TASKS ADDED*\n"
+            msg = (f"*TASKS ADDED*\n"
                    f"Project: `{p_name}`\n"
                    f"New Tasks: +{new_tasks}\n"
                    f"Total Drafts: {draft_count}")
